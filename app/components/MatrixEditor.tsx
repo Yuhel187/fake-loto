@@ -33,9 +33,12 @@ export function MatrixEditor({ initialData, onConfirm, onRetake }: MatrixEditorP
     };
 
     return (
-        <div className="w-full flex flex-col gap-6">
-            <Card className="bg-black/40 backdrop-blur-xl rounded-2xl p-3 shadow-2xl border border-[#FFD700]/30">
-                <div className="min-w-[300px] grid grid-rows-9 gap-1">
+        <div className="w-full flex flex-col gap-5">
+            <p className="text-center text-gray-400 text-sm font-semibold tracking-wide">
+                Kiểm tra lại kỹ rồi xác nhận nhé ✔️
+            </p>
+            <Card className="bg-white rounded-2xl p-2 shadow-sm border border-gray-200">
+                <div className="grid gap-1" style={{ gridTemplateRows: `repeat(${grid.length}, 1fr)` }}>
                     {grid.map((row, rIndex) => (
                         <div key={rIndex} className="grid grid-cols-9 gap-1">
                             {row.map((cell, cIndex) => (
@@ -45,11 +48,10 @@ export function MatrixEditor({ initialData, onConfirm, onRetake }: MatrixEditorP
                                     inputMode="numeric"
                                     maxLength={2}
                                     className={`
-                                        w-full aspect-square text-center font-bold text-xl rounded-md p-0
-                                        border border-white/5 
-                                        focus-visible:border-[#FFD700] focus-visible:ring-2 focus-visible:ring-[#FFD700]/30 
-                                        bg-[#1a0505]/80 text-[#FFD700] caret-[#FFD700]
-                                        ${cell === null ? 'bg-transparent border-transparent' : 'shadow-sm'}
+                                        w-full aspect-square text-center font-black p-0 rounded-lg
+                                        border focus-visible:border-[#C62828] focus-visible:ring-1 focus-visible:ring-[#C62828]/30
+                                        bg-white text-gray-800 caret-[#C62828] text-base
+                                        ${cell === null ? 'bg-gray-50 border-transparent opacity-50' : 'border-gray-200'}
                                     `}
                                     value={cell ?? ''}
                                     onChange={(e) => handleChange(rIndex, cIndex, e.target.value)}
@@ -60,24 +62,20 @@ export function MatrixEditor({ initialData, onConfirm, onRetake }: MatrixEditorP
                 </div>
             </Card>
 
-            <p className="text-center text-[#FFD700]/60 text-sm font-medium tracking-wide">
-                Kiểm tra lại kỹ trước khi xuống xác!
-            </p>
-
-            <div className="flex gap-8 pt-4">
+            <div className="flex gap-3">
                 <Button
                     onClick={onRetake}
                     variant="outline"
-                    className="flex-1 gap-2 h-16 text-base rounded-2xl font-bold border border-[#D32F2F]/50 text-[#D32F2F] bg-white/5 hover:bg-[#D32F2F] hover:text-white shadow-[0_0_15px_rgba(211,47,47,0.2)] hover:scale-105 active:scale-95 transition-all"
+                    className="flex-1 gap-2 h-14 text-base rounded-2xl font-bold border border-gray-300 text-gray-600 bg-white hover:bg-gray-50 active:scale-95 transition-all"
                 >
-                    <RotateCcw size={20} />
+                    <RotateCcw size={18} />
                     Chụp Lại
                 </Button>
                 <Button
                     onClick={() => onConfirm(grid)}
-                    className="flex-1 gap-2 h-16 text-lg rounded-2xl bg-gradient-to-r from-[#FFD700] to-[#FFA000] text-[#8B0000] font-black border border-white/20 shadow-[0_0_20px_rgba(255,215,0,0.4)] hover:scale-105 active:scale-95 transition-all"
+                    className="flex-1 gap-2 h-14 text-base rounded-2xl bg-[#C62828] text-white font-black border-0 shadow-[0_4px_16px_rgba(198,40,40,0.3)] hover:bg-[#B71C1C] active:scale-95 transition-all"
                 >
-                    <Check size={24} />
+                    <Check size={20} />
                     Xác Nhận
                 </Button>
             </div>

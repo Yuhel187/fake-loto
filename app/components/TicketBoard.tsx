@@ -16,20 +16,20 @@ export function TicketBoard({ matrix, calledNumbers, lastCalledNumber, themeColo
 
     return (
         <Card
-            className="w-full max-w-lg rounded-2xl p-3 shadow-2xl border-4 relative overflow-hidden transition-colors duration-500"
+            className="w-full rounded-2xl p-2.5 shadow-2xl border-[3px] relative overflow-hidden transition-colors duration-500"
             style={{
                 backgroundColor: boardBg,
-                borderColor: '#FFD700' // Always Gold Border for contrast
+                borderColor: '#FFD700'
             }}
         >
-            {/* Decorative Patterns */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none"
-                style={{ backgroundImage: 'radial-gradient(#FFF 1px, transparent 1px)', backgroundSize: '20px 20px' }}
+            {/* Decorative dot pattern */}
+            <div className="absolute inset-0 opacity-[0.07] pointer-events-none"
+                style={{ backgroundImage: 'radial-gradient(#FFF 1px, transparent 1px)', backgroundSize: '18px 18px' }}
             />
 
-            <div className="min-w-[300px] grid grid-rows-9 gap-1 relative z-10">
+            <div className="grid gap-[3px] relative z-10" style={{ gridTemplateRows: `repeat(${matrix.length}, 1fr)` }}>
                 {matrix.map((row, rIndex) => (
-                    <div key={rIndex} className="grid grid-cols-9 gap-1">
+                    <div key={rIndex} className="grid grid-cols-9 gap-[3px]">
                         {row.map((num, cIndex) => {
                             const isMarked = num !== null && calledNumbers.includes(num);
                             const isJustCalled = num !== null && num === lastCalledNumber;
@@ -38,24 +38,27 @@ export function TicketBoard({ matrix, calledNumbers, lastCalledNumber, themeColo
                                 <div
                                     key={`${rIndex}-${cIndex}`}
                                     className={clsx(
-                                        "relative w-full aspect-square flex items-center justify-center font-bold text-xl rounded-md transition-all duration-300 shadow-sm",
-                                        // ALWAYS use Light Cream background for cells to ensure contrast against any board color
-                                        num === null ? "bg-black/20" : "bg-[#FFF8E1]",
-                                        isJustCalled && "z-20 scale-110 shadow-lg ring-4 ring-[#FFD700]"
+                                        "relative w-full aspect-square flex items-center justify-center font-black rounded-lg transition-all duration-300",
+                                        num === null ? "bg-black/25" : isMarked ? "bg-[#FFF8E1]" : "bg-[#FFF8E1]",
+                                        isJustCalled && "z-20 scale-110 shadow-[0_0_12px_rgba(255,215,0,0.8)] glow-gold"
                                     )}
                                 >
                                     {num !== null && (
-                                        <span className={clsx(
-                                            "z-10 relative font-sans",
-                                            isMarked ? "text-[#D32F2F]" : "text-[#B71C1C]" // Always Dark Red text
-                                        )}>{num}</span>
+                                        <span
+                                            className={clsx(
+                                                "ticket-num z-10 relative font-black select-none",
+                                                isMarked ? "text-[#D32F2F] opacity-40" : "text-[#8B0000]"
+                                            )}
+                                        >{num}</span>
                                     )}
 
-                                    {/* Red Circle Mark */}
+                                    {/* Marked: filled red circle overlay */}
                                     {isMarked && (
-                                        <div className={`absolute inset-0 z-20 flex items-center justify-center pointer-events-none ${isJustCalled ? 'animate-bounce' : 'animate-in zoom-in duration-200'}`}>
-                                            <div className="w-[90%] h-[90%] border-[3px] border-[#D32F2F] rounded-full" />
-                                        </div>
+                                        <div className={`absolute inset-[6%] z-20 rounded-full border-[3px] ${
+                                            isJustCalled
+                                                ? 'border-[#FFD700] bg-[#FFD700]/20 animate-bounce'
+                                                : 'border-[#D32F2F] bg-[#D32F2F]/10 animate-in zoom-in duration-200'
+                                        } pointer-events-none`} />
                                     )}
                                 </div>
                             );
