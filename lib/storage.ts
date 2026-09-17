@@ -34,3 +34,35 @@ export function getHistory(): GameRecord[] {
 export function clearHistory() {
     localStorage.removeItem(STORAGE_KEY);
 }
+
+export interface ChatWidgetConfig {
+    scriptUrl: string;
+    siteKey: string;
+    enabled: boolean;
+}
+
+const CHAT_WIDGET_KEY = 'chat_widget_config';
+
+const DEFAULT_CHAT_WIDGET_CONFIG: ChatWidgetConfig = {
+    scriptUrl: '',
+    siteKey: '',
+    enabled: false,
+};
+
+export function getChatWidgetConfig(): ChatWidgetConfig {
+    if (typeof window === 'undefined') return DEFAULT_CHAT_WIDGET_CONFIG;
+    try {
+        const raw = localStorage.getItem(CHAT_WIDGET_KEY);
+        return raw ? { ...DEFAULT_CHAT_WIDGET_CONFIG, ...JSON.parse(raw) } : DEFAULT_CHAT_WIDGET_CONFIG;
+    } catch {
+        return DEFAULT_CHAT_WIDGET_CONFIG;
+    }
+}
+
+export function saveChatWidgetConfig(config: ChatWidgetConfig) {
+    try {
+        localStorage.setItem(CHAT_WIDGET_KEY, JSON.stringify(config));
+    } catch (error) {
+        console.error("Failed to save chat widget config", error);
+    }
+}

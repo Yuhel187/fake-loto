@@ -1,10 +1,15 @@
 import Link from "next/link";
 import { Button } from "./components/Button";
-import { Camera, History, Ticket } from "lucide-react";
+import { Camera, History, Settings, Ticket } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="screen-full flex flex-col items-center justify-center p-5 safe-area-top safe-area-bottom bg-[#F2F2F7]">
+    <main className="screen-full relative flex flex-col items-center justify-center p-5 safe-area-top safe-area-bottom bg-[#F2F2F7]">
+      <Link href="/settings" className="absolute top-5 right-5">
+        <button className="w-10 h-10 flex items-center justify-center rounded-full bg-white text-gray-500 shadow-sm active:scale-90 transition-all">
+          <Settings size={20} />
+        </button>
+      </Link>
       <div className="flex flex-col items-center gap-7 w-full max-w-sm">
         {/* Logo / Title */}
         <div className="text-center">
